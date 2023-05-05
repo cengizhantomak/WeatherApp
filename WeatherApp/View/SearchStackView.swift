@@ -7,9 +7,15 @@
 
 import UIKit
 
+protocol SearchStackViewDelegate: AnyObject {
+    func didFetchWeather(_ searchStackView: SearchStackView, weatherModel: WeatherModel)
+    func didFailWithError(_ searchStackView: SearchStackView, error: ServiceError)
+}
+
 class SearchStackView: UIStackView {
     
     // MARK: - Properties
+    weak var delegate: SearchStackViewDelegate?
     private let locationButton = UIButton(type: .system)
     private let searchTextField = UITextField()
     private let searchButton = UIButton(type: .system)
@@ -81,6 +87,7 @@ extension SearchStackView {
 
 // MARK: - Selector
 extension SearchStackView {
+    
     @objc private func handleSearchButton(_ sender: UIButton) {
         self.searchTextField.endEditing(true)
     }
@@ -104,13 +111,15 @@ extension SearchStackView: UITextFieldDelegate {
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-        service.fetchWeather(forCityName: "london") { result in
+        guard let cityName = searchTextField.text else { return }
+        service.fetchWeather(forCityName: cityName) { result in
             switch result {
             case .success(let result):
-                print(result.main.temp)
-            case .failure(_):
-                print("Error")
+                self.delegate?.didFetchWeather(self, weatherModel: result)
+            case .failure(let error):
+                self.delegate?.didFailWithError(self, error: error)
             }
         }
+        self.searchTextField.text = ""
     }
 }

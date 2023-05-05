@@ -43,6 +43,7 @@ extension HomeViewController {
         searchStackView.translatesAutoresizingMaskIntoConstraints = false
         searchStackView.spacing = 8
         searchStackView.axis = .horizontal
+        searchStackView.delegate = self
         
         //mainStackView style
         mainStackView.translatesAutoresizingMaskIntoConstraints = false
@@ -118,5 +119,22 @@ extension HomeViewController: CLLocationManagerDelegate {
         print(location.coordinate.latitude)
         print(location.coordinate.longitude)
         locationManager.stopUpdatingLocation()
+    }
+}
+
+// MARK: - SearchStackViewDelegate
+extension HomeViewController: SearchStackViewDelegate {
+    
+    func didFailWithError(_ searchStackView: SearchStackView, error: ServiceError) {
+        switch error {
+        case .serverError:
+            print("server error")
+        case .decodingError:
+            print("decoding error")
+        }
+    }
+    
+    func didFetchWeather(_ searchStackView: SearchStackView, weatherModel: WeatherModel) {
+        print(weatherModel.main.temp)
     }
 }
