@@ -11,6 +11,7 @@
 		47EFAA4F2A05383A00A7C663 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47EFAA4E2A05383A00A7C663 /* HomeViewController.swift */; };
 		47EFAA542A05383B00A7C663 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 47EFAA532A05383B00A7C663 /* Assets.xcassets */; };
 		47EFAA572A05383B00A7C663 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 47EFAA552A05383B00A7C663 /* LaunchScreen.storyboard */; };
+		47EFAA622A05701B00A7C663 /* SearchStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47EFAA612A05701B00A7C663 /* SearchStackView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -20,6 +21,7 @@
 		47EFAA532A05383B00A7C663 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		47EFAA562A05383B00A7C663 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		47EFAA582A05383B00A7C663 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		47EFAA612A05701B00A7C663 /* SearchStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchStackView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,6 +54,7 @@
 		47EFAA492A05383A00A7C663 /* WeatherApp */ = {
 			isa = PBXGroup;
 			children = (
+				47EFAA602A056FF600A7C663 /* View */,
 				47EFAA5E2A0539E900A7C663 /* Controller */,
 				47EFAA5F2A0539FB00A7C663 /* Files */,
 			);
@@ -75,6 +78,14 @@
 				47EFAA582A05383B00A7C663 /* Info.plist */,
 			);
 			name = Files;
+			sourceTree = "<group>";
+		};
+		47EFAA602A056FF600A7C663 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				47EFAA612A05701B00A7C663 /* SearchStackView.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -147,6 +158,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				47EFAA622A05701B00A7C663 /* SearchStackView.swift in Sources */,
 				47EFAA4F2A05383A00A7C663 /* HomeViewController.swift in Sources */,
 				47EFAA4B2A05383A00A7C663 /* AppDelegate.swift in Sources */,
 			);

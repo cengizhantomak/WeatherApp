@@ -12,10 +12,7 @@ class HomeViewController: UIViewController {
     // MARK: - Properties
     private let backgroundImageView = UIImageView()
     private let mainStackView = UIStackView()
-    private let searchStackView = UIStackView()
-    private let locationButton = UIButton(type: .system)
-    private let searchTextField = UITextField()
-    private let searchButton = UIButton(type: .system)
+    private let searchStackView = SearchStackView()
     private let statusImageView = UIImageView()
     private let temperatureLabel = UILabel()
     private let cityLabel = UILabel()
@@ -38,30 +35,6 @@ extension HomeViewController {
         backgroundImageView.translatesAutoresizingMaskIntoConstraints = false
         backgroundImageView.contentMode = .scaleAspectFill
         backgroundImageView.image = UIImage(named: "background")
-        
-        //locationButton style
-        locationButton.translatesAutoresizingMaskIntoConstraints = false
-        locationButton.setImage(UIImage(systemName: "location.circle.fill"), for: .normal)
-        locationButton.tintColor = .label
-        locationButton.layer.cornerRadius = 40 / 2
-        locationButton.contentVerticalAlignment = .fill
-        locationButton.contentHorizontalAlignment = .fill
-        
-        //searchButton style
-        searchButton.translatesAutoresizingMaskIntoConstraints = false
-        searchButton.setImage(UIImage(systemName: "magnifyingglass"), for: .normal)
-        searchButton.layer.cornerRadius = 40 / 2
-        searchButton.tintColor = .label
-        searchButton.contentVerticalAlignment = .fill
-        searchButton.contentHorizontalAlignment = .fill
-        
-        //searchTextField style
-        searchTextField.translatesAutoresizingMaskIntoConstraints = false
-        searchTextField.placeholder = "Search"
-        searchTextField.font = UIFont.preferredFont(forTextStyle: .title1)
-        searchTextField.borderStyle = .roundedRect
-        searchTextField.textAlignment = .right
-        searchTextField.backgroundColor = .systemFill
         
         //searchStackView style
         searchStackView.translatesAutoresizingMaskIntoConstraints = false
@@ -95,33 +68,24 @@ extension HomeViewController {
         view.addSubview(backgroundImageView)
         view.addSubview(mainStackView)
         mainStackView.addArrangedSubview(searchStackView)
-        searchStackView.addArrangedSubview(locationButton)
-        searchStackView.addArrangedSubview(searchTextField)
-        searchStackView.addArrangedSubview(searchButton)
         mainStackView.addArrangedSubview(statusImageView)
         mainStackView.addArrangedSubview(temperatureLabel)
         mainStackView.addArrangedSubview(cityLabel)
         
         NSLayoutConstraint.activate([
             
-            // backgroundImageView layout
+            //backgroundImageView layout
             backgroundImageView.topAnchor.constraint(equalTo: view.topAnchor),
             backgroundImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             view.trailingAnchor.constraint(equalTo: backgroundImageView.trailingAnchor),
             view.bottomAnchor.constraint(equalTo: backgroundImageView.bottomAnchor),
             
-            // mainStackView layout
+            //mainStackView layout
             mainStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 8),
             mainStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8),
             view.trailingAnchor.constraint(equalTo: mainStackView.trailingAnchor, constant: 8),
             
             searchStackView.widthAnchor.constraint(equalTo: mainStackView.widthAnchor),
-            locationButton.heightAnchor.constraint(equalToConstant: 40),
-            locationButton.widthAnchor.constraint(equalToConstant: 40),
-            
-            // searchButton layout
-            searchButton.heightAnchor.constraint(equalToConstant: 40),
-            searchButton.widthAnchor.constraint(equalToConstant: 40),
             
             //statusImageView layout
             statusImageView.heightAnchor.constraint(equalToConstant: 85),
