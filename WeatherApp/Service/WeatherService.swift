@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import CoreLocation
 
 enum ServiceError: Error {
     case serverError
@@ -16,9 +17,19 @@ struct WeatherService {
     
     let url = "https://api.openweathermap.org/data/2.5/weather?&appid=032819d54ac180c3b112ec2f3c8ff595&units=metric"
     
-    func fetchWeather(forCityName cityName: String, completion: @escaping(Result<WeatherModel, ServiceError>) -> Void) {
+    func fetchWeatherCityName(forCityName cityName: String, completion: @escaping(Result<WeatherModel, ServiceError>) -> Void) {
         
         let url = URL(string: "\(url)&q=\(cityName)")!
+        fetchWeather(url: url, completion: completion)
+    }
+    
+    func fetchWeatherLocation(latitude: CLLocationDegrees, longitude: CLLocationDegrees, completion: @escaping(Result<WeatherModel, ServiceError>) -> Void) {
+        
+        let url = URL(string: "\(url)&lat=\(latitude)&lon=\(longitude)")!
+        fetchWeather(url: url, completion: completion)
+    }
+    
+    private func fetchWeather(url: URL, completion: @escaping(Result<WeatherModel, ServiceError>) -> Void) {
         URLSession.shared.dataTask(with: url) { data, response, error in
             DispatchQueue.main.async {
                 guard error == nil else {

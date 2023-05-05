@@ -22,6 +22,7 @@ class HomeViewController: UIViewController {
     private let temperatureLabel = UILabel()
     private let cityLabel = UILabel()
     private let locationManager = CLLocationManager()
+    private let service = WeatherService()
 
     // MARK: - Lifecycle
     override func viewDidLoad() {
@@ -123,18 +124,30 @@ extension HomeViewController {
     }
 }
 
+// MARK: - CLLocationManagerDelegate
 extension HomeViewController: CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         let location = locations.last!
-        print(location.coordinate.latitude)
-        print(location.coordinate.longitude)
         locationManager.stopUpdatingLocation()
+        self.service.fetchWeatherLocation(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude) { result in
+            switch result {
+            case .success(let result):
+                self.viewModel = WeatherViewModel(weatherModel: result)
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
     }
 }
 
 // MARK: - SearchStackViewDelegate
 extension HomeViewController: SearchStackViewDelegate {
+    
+    func updatingLocation(_ searchStackView: SearchStackView) {
+        self.locationManager.startUpdatingLocation()
+    }
+    
     
     func didFailWithError(_ searchStackView: SearchStackView, error: ServiceError) {
         switch error {
