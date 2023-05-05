@@ -20,19 +20,21 @@ struct WeatherService {
         
         let url = URL(string: "\(url)&q=\(cityName)")!
         URLSession.shared.dataTask(with: url) { data, response, error in
-            guard error == nil else {
-                completion(.failure(.serverError))
-                return
+            DispatchQueue.main.async {
+                guard error == nil else {
+                    completion(.failure(.serverError))
+                    return
+                }
+                
+                guard let data = data else { return }
+                
+                guard let result = parseJSON(data: data) else {
+                    completion(.failure(.decodingError))
+                    return
+                }
+                
+                completion(.success(result))
             }
-            
-            guard let data = data else { return }
-            
-            guard let result = parseJSON(data: data) else {
-                completion(.failure(.decodingError))
-                return
-            }
-            
-            completion(.success(result))
             
         }.resume()
     }
