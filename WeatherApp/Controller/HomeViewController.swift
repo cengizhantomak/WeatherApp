@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import CoreLocation
 
 class HomeViewController: UIViewController {
     
@@ -16,6 +17,7 @@ class HomeViewController: UIViewController {
     private let statusImageView = UIImageView()
     private let temperatureLabel = UILabel()
     private let cityLabel = UILabel()
+    private let locationManager = CLLocationManager()
 
     // MARK: - Lifecycle
     override func viewDidLoad() {
@@ -23,6 +25,7 @@ class HomeViewController: UIViewController {
         
         style()
         layout()
+        configureLocation()
     }
 }
 
@@ -98,5 +101,22 @@ extension HomeViewController {
         attributedText.append(NSAttributedString(string: "°C", attributes: [.font: UIFont.systemFont(ofSize: 50)]))
         
         return attributedText
+    }
+    
+    private func configureLocation() {
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.startUpdatingLocation()
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.delegate = self
+    }
+}
+
+extension HomeViewController: CLLocationManagerDelegate {
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        let location = locations.last!
+        print(location.coordinate.latitude)
+        print(location.coordinate.longitude)
+        locationManager.stopUpdatingLocation()
     }
 }
