@@ -57,6 +57,7 @@ extension SearchStackView {
         searchTextField.borderStyle = .roundedRect
         searchTextField.textAlignment = .right
         searchTextField.backgroundColor = .systemFill
+        searchTextField.delegate = self
     }
     
     private func layout() {
@@ -81,6 +82,28 @@ extension SearchStackView {
 // MARK: - Selector
 extension SearchStackView {
     @objc private func handleSearchButton(_ sender: UIButton) {
+        self.searchTextField.endEditing(true)
+    }
+}
+
+// MARK: - UITextFieldDelegate
+extension SearchStackView: UITextFieldDelegate {
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        print("return")
+        return self.searchTextField.endEditing(true)
+    }
+    
+    func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
+        if searchTextField.text != "" {
+            return true
+        } else {
+            searchTextField.placeholder = "Search"
+            return false
+        }
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
         service.fetchWeather(forCityName: "london") { result in
             switch result {
             case .success(let result):
