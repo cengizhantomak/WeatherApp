@@ -82,7 +82,7 @@ extension HomeViewController {
         //temperatureLabel style
         temperatureLabel.translatesAutoresizingMaskIntoConstraints = false
         temperatureLabel.font = UIFont.systemFont(ofSize: 80)
-        temperatureLabel.text = "15C"
+        temperatureLabel.attributedText = attributedText(with: "15")
         
         //cityLabel style
         cityLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -127,5 +127,12 @@ extension HomeViewController {
             statusImageView.heightAnchor.constraint(equalToConstant: 85),
             statusImageView.widthAnchor.constraint(equalToConstant: 85)
         ])
+    }
+    
+    private func attributedText(with text: String) -> NSMutableAttributedString {
+        let attributedText = NSMutableAttributedString(string: text, attributes: [.foregroundColor: UIColor.label, .font: UIFont.boldSystemFont(ofSize: 90)])
+        attributedText.append(NSAttributedString(string: "°C", attributes: [.font: UIFont.systemFont(ofSize: 50)]))
+        
+        return attributedText
     }
 }
