@@ -11,6 +11,7 @@ class HomeViewController: UIViewController {
     
     // MARK: - Properties
     private let backgroundImageView = UIImageView()
+    private let searchStackView = UIStackView()
     private let locationButton = UIButton(type: .system)
     private let searchTextField = UITextField()
     private let searchButton = UIButton(type: .system)
@@ -57,14 +58,21 @@ extension HomeViewController {
         searchTextField.borderStyle = .roundedRect
         searchTextField.textAlignment = .right
         searchTextField.backgroundColor = .systemFill
+        
+        //searchStackView style
+        searchStackView.translatesAutoresizingMaskIntoConstraints = false
+        searchStackView.spacing = 8
+        searchStackView.axis = .horizontal
     }
     
     private func layout() {
         
         view.addSubview(backgroundImageView)
-        view.addSubview(locationButton)
-        view.addSubview(searchButton)
-        view.addSubview(searchTextField)
+        view.addSubview(searchStackView)
+        searchStackView.addArrangedSubview(locationButton)
+        searchStackView.addArrangedSubview(searchTextField)
+        searchStackView.addArrangedSubview(searchButton)
+        
         NSLayoutConstraint.activate([
             
             // backgroundImageView layout
@@ -74,23 +82,15 @@ extension HomeViewController {
             view.bottomAnchor.constraint(equalTo: backgroundImageView.bottomAnchor),
             
             // locationButton layout
-            locationButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 8),
-            locationButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8),
+            searchStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 8),
+            searchStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8),
+            view.trailingAnchor.constraint(equalTo: searchStackView.trailingAnchor, constant: 8),
             locationButton.heightAnchor.constraint(equalToConstant: 40),
             locationButton.widthAnchor.constraint(equalToConstant: 40),
             
             // searchButton layout
             searchButton.heightAnchor.constraint(equalToConstant: 40),
-            searchButton.widthAnchor.constraint(equalToConstant: 40),
-            searchButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 8),
-            //searchButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -8),
-            view.trailingAnchor.constraint(equalTo: searchButton.trailingAnchor, constant: 8),
-            
-            //searchTextField layout
-            searchTextField.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 8),
-            searchTextField.leadingAnchor.constraint(equalTo: locationButton.trailingAnchor, constant: 4),
-            //searchTextField.trailingAnchor.constraint(equalTo: searchButton.leadingAnchor, constant: -4)
-            searchButton.leadingAnchor.constraint(equalTo: searchTextField.trailingAnchor, constant: 4)
+            searchButton.widthAnchor.constraint(equalToConstant: 40)
         ])
     }
 }
